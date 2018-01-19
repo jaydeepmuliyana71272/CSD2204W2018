@@ -1,0 +1,395 @@
+mysql> CREATE VIEW D10_V1 AS SELECT * FROM PRODUCTS;
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> SHOW TABLES;
++----------------------+
+| Tables_in_csd2204w18 |
++----------------------+
+| animals              |
+| countries            |
+| d10_v1               |
+| departments          |
+| employees            |
+| job_history          |
+| jobs                 |
+| locations            |
+| manu                 |
+| pet                  |
+| products             |
+| regions              |
++----------------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT * FROM D10_V1;
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    1 | Hard drive      |   240 |            5 |
+|    2 | Memory          |   120 |            6 |
+|    3 | ZIP drive       |   150 |            4 |
+|    4 | Floppy disk     |     5 |            6 |
+|    5 | Monitor         |   240 |            1 |
+|    6 | DVD drive       |   180 |            2 |
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | Printer         |    40 |            7 |
+|   12 | Toner cartridge |    54 |            7 |
+|   13 | DVD burner      |    78 |            7 |
++------+-----------------+-------+--------------+
+13 rows in set (0.05 sec)
+
+mysql> SELECT * FROM D10_V1 WHERE CODE > 6;
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | Printer         |    40 |            7 |
+|   12 | Toner cartridge |    54 |            7 |
+|   13 | DVD burner      |    78 |            7 |
++------+-----------------+-------+--------------+
+7 rows in set (0.03 sec)
+
+mysql> SELECT * FROM D10_V1 WHERE CODE > 6 AND PRICE = 54;
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|   12 | Toner cartridge |    54 |            7 |
++------+-----------------+-------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM D10_V1 WHERE NAME LIKE 'DVD BURNER';
++------+------------+-------+--------------+
+| Code | Name       | Price | Manufacturer |
++------+------------+-------+--------------+
+|   10 | DVD burner |   180 |            2 |
+|   13 | DVD burner |    78 |            7 |
++------+------------+-------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM D10_V1 WHERE CODE BETWEEN 2 AND 7; 
++------+-------------+-------+--------------+
+| Code | Name        | Price | Manufacturer |
++------+-------------+-------+--------------+
+|    2 | Memory      |   120 |            6 |
+|    3 | ZIP drive   |   150 |            4 |
+|    4 | Floppy disk |     5 |            6 |
+|    5 | Monitor     |   240 |            1 |
+|    6 | DVD drive   |   180 |            2 |
+|    7 | CD drive    |    90 |            2 |
++------+-------------+-------+--------------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT * FROM D10_V1 WHERE CODE > 6 OR NAME LIKE 'CD DRIVER'; 
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | Printer         |    40 |            7 |
+|   12 | Toner cartridge |    54 |            7 |
+|   13 | DVD burner      |    78 |            7 |
++------+-----------------+-------+--------------+
+7 rows in set (0.02 sec)
+
+mysql> SELECT * FROM D10_V1 WHERE CODE > 6 OR NAME LIKE 'MEMORY';
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    2 | Memory          |   120 |            6 |
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | Printer         |    40 |            7 |
+|   12 | Toner cartridge |    54 |            7 |
+|   13 | DVD burner      |    78 |            7 |
++------+-----------------+-------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO D10_V1 VALUES(13,'ABC',100,1);
+ERROR 1062 (23000): Duplicate entry '13' for key 'PRIMARY'
+mysql> INSERT INTO D10_V1 VALUES(14,'ABC',100,1);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> SELECT * FROM PRODUCTS;
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    1 | Hard drive      |   240 |            5 |
+|    2 | Memory          |   120 |            6 |
+|    3 | ZIP drive       |   150 |            4 |
+|    4 | Floppy disk     |     5 |            6 |
+|    5 | Monitor         |   240 |            1 |
+|    6 | DVD drive       |   180 |            2 |
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | Printer         |    40 |            7 |
+|   12 | Toner cartridge |    54 |            7 |
+|   13 | DVD burner      |    78 |            7 |
+|   14 | ABC             |   100 |            1 |
++------+-----------------+-------+--------------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE D10_V1 SET CODE=15 WHERE CODE=14;
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM PRODUCTS;
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    1 | Hard drive      |   240 |            5 |
+|    2 | Memory          |   120 |            6 |
+|    3 | ZIP drive       |   150 |            4 |
+|    4 | Floppy disk     |     5 |            6 |
+|    5 | Monitor         |   240 |            1 |
+|    6 | DVD drive       |   180 |            2 |
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | Printer         |    40 |            7 |
+|   12 | Toner cartridge |    54 |            7 |
+|   13 | DVD burner      |    78 |            7 |
+|   15 | ABC             |   100 |            1 |
++------+-----------------+-------+--------------+
+14 rows in set (0.00 sec)
+
+mysql> DELECT * FROM D10_V1 WHERE CODE=15;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELECT * FROM D10_V1 WHERE CODE=15' at line 1
+mysql> DELECT FROM D10_V1 WHERE CODE=15;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DELECT FROM D10_V1 WHERE CODE=15' at line 1
+mysql> DELETE * FROM D10_V1 WHERE CODE=15;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM D10_V1 WHERE CODE=15' at line 1
+mysql> DELETE  FROM D10_V1 WHERE CODE=15;
+Query OK, 1 row affected (0.16 sec)
+
+mysql> SELECT * FROM PRODUCTS;
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    1 | Hard drive      |   240 |            5 |
+|    2 | Memory          |   120 |            6 |
+|    3 | ZIP drive       |   150 |            4 |
+|    4 | Floppy disk     |     5 |            6 |
+|    5 | Monitor         |   240 |            1 |
+|    6 | DVD drive       |   180 |            2 |
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | Printer         |    40 |            7 |
+|   12 | Toner cartridge |    54 |            7 |
+|   13 | DVD burner      |    78 |            7 |
++------+-----------------+-------+--------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT * FROM D10_V1;
++------+-----------------+-------+--------------+
+| Code | Name            | Price | Manufacturer |
++------+-----------------+-------+--------------+
+|    1 | Hard drive      |   240 |            5 |
+|    2 | Memory          |   120 |            6 |
+|    3 | ZIP drive       |   150 |            4 |
+|    4 | Floppy disk     |     5 |            6 |
+|    5 | Monitor         |   240 |            1 |
+|    6 | DVD drive       |   180 |            2 |
+|    7 | CD drive        |    90 |            2 |
+|    8 | Printer         |   270 |            3 |
+|    9 | Toner cartridge |    66 |            3 |
+|   10 | DVD burner      |   180 |            2 |
+|   11 | Printer         |    40 |            7 |
+|   12 | Toner cartridge |    54 |            7 |
+|   13 | DVD burner      |    78 |            7 |
++------+-----------------+-------+--------------+
+13 rows in set (0.00 sec)
+
+mysql> CREATE VIEW D10_V1 AS SELECT PRODUCTS.CODE, PRODUCTS.NAME "PRODUCT", MENU.NAME "MANUFECTURER" FROM MANU INNER JOIN PRODUCTS ON PRODUCTS.CODE = MANU.CODE;
+ERROR 1054 (42S22): Unknown column 'MENU.NAME' in 'field list'
+mysql> CREATE VIEW D10_V1 AS SELECT PRODUCTS.CODE, PRODUCTS.NAME "PRODUCT", MANU.NAME "MANUFECTURER" FROM MANU INNER JOIN PRODUCTS ON PRODUCTS.CODE = MANU.CODE;
+ERROR 1050 (42S01): Table 'D10_V1' already exists
+mysql> CREATE VIEW D10_V8 AS SELECT PRODUCTS.CODE, PRODUCTS.NAME "PRODUCT", MANU.NAME "MANUFECTURER" FROM MANU INNER JOIN PRODUCTS ON PRODUCTS.CODE = MANU.CODE;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM D10_V8;
++------+-----------------+-------------------+
+| CODE | PRODUCT         | MANUFECTURER      |
++------+-----------------+-------------------+
+|    1 | Hard drive      | Sony              |
+|    2 | Memory          | Creative Labs     |
+|    3 | ZIP drive       | Hewlett-Packard   |
+|    4 | Floppy disk     | Iomega            |
+|    5 | Monitor         | Fujitsu           |
+|    6 | DVD drive       | Winchester        |
+|    7 | CD drive        | moxDroid Labs Inc |
+|    8 | Printer         | Dell              |
+|    9 | Toner cartridge | Bell Labs         |
++------+-----------------+-------------------+
+9 rows in set (0.00 sec)
+
+mysql> DESC D10_V8;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| CODE         | int(3)       | NO   |     | 0       |       |
+| PRODUCT      | varchar(255) | NO   |     | NULL    |       |
+| MANUFECTURER | varchar(50)  | NO   |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> INSERT INTO D10_V8 VALUES(10,'ABC','XYZ');
+ERROR 1394 (HY000): Can not insert into join view 'csd2204w18.d10_v8' without fields list
+mysql> DELETE FROM D10_V8 WHERE CODE =9;
+ERROR 1395 (HY000): Can not delete from join view 'csd2204w18.d10_v8'
+mysql> UPDATE D10_V8 SET CODE = 10 WHERE PRODUCT= 'PRINTER';
+ERROR 1062 (23000): Duplicate entry '10' for key 'PRIMARY'
+mysql> UPDATE D10_V8 SET CODE = 20 WHERE PRODUCT= 'PRINTER';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> CREATE VIEW V_TODAY (TODAY) AS SELECT CURRENT_DATE;
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> SELECT * FROM V_TODAY;
++------------+
+| TODAY      |
++------------+
+| 2018-01-19 |
++------------+
+1 row in set (0.03 sec)
+
+mysql> CREATE OR REPLACE VIEW V_TODAY (NOW) AS SELECT NOW;
+ERROR 1054 (42S22): Unknown column 'NOW' in 'field list'
+mysql> CREATE OR REPLACE VIEW V_TODAY (NOW) AS SELECT NOW();
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM V_TODAY;
++---------------------+
+| NOW                 |
++---------------------+
+| 2018-01-19 05:48:21 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> DROP VIEW IF EXISTS V_TODAY;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW TABLES;
++----------------------+
+| Tables_in_csd2204w18 |
++----------------------+
+| animals              |
+| countries            |
+| d10_v1               |
+| d10_v8               |
+| departments          |
+| employees            |
+| job_history          |
+| jobs                 |
+| locations            |
+| manu                 |
+| pet                  |
+| products             |
+| regions              |
++----------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT first_name, last_name FROM employees WHERE manager_id in (select employee_id FROM employees WHERE department_id IN (SELECT department_id FROM departments WHERE location_id IN (SELECT location_id FROM locations WHERE country_id='US')));
++-------------+-------------+
+| first_name  | last_name   |
++-------------+-------------+
+| Neena       | Kochhar     |
+| Lex         | De Haan     |
+| Alexander   | Hunold      |
+| Bruce       | Ernst       |
+| David       | Austin      |
+| Valli       | Pataballa   |
+| Diana       | Lorentz     |
+| Nancy       | Greenberg   |
+| Daniel      | Faviet      |
+| John        | Chen        |
+| Ismael      | Sciarra     |
+| Jose Manuel | Urman       |
+| Luis        | Popp        |
+| Den         | Raphaely    |
+| Alexander   | Khoo        |
+| Shelli      | Baida       |
+| Sigal       | Tobias      |
+| Guy         | Himuro      |
+| Karen       | Colmenares  |
+| Matthew     | Weiss       |
+| Adam        | Fripp       |
+| Payam       | Kaufling    |
+| Shanta      | Vollman     |
+| Kevin       | Mourgos     |
+| Julia       | Nayer       |
+| Irene       | Mikkilineni |
+| James       | Landry      |
+| Steven      | Markle      |
+| Laura       | Bissot      |
+| Mozhe       | Atkinson    |
+| James       | Marlow      |
+| TJ          | Olson       |
+| Jason       | Mallin      |
+| Michael     | Rogers      |
+| Ki          | Gee         |
+| Hazel       | Philtanker  |
+| Renske      | Ladwig      |
+| Stephen     | Stiles      |
+| John        | Seo         |
+| Joshua      | Patel       |
+| Trenna      | Rajs        |
+| Curtis      | Davies      |
+| Randall     | Matos       |
+| Peter       | Vargas      |
+| John        | Russell     |
+| Karen       | Partners    |
+| Alberto     | Errazuriz   |
+| Gerald      | Cambrault   |
+| Eleni       | Zlotkey     |
+| Winston     | Taylor      |
+| Jean        | Fleaur      |
+| Martha      | Sullivan    |
+| Girard      | Geoni       |
+| Nandita     | Sarchand    |
+| Alexis      | Bull        |
+| Julia       | Dellinger   |
+| Anthony     | Cabrio      |
+| Kelly       | Chung       |
+| Jennifer    | Dilly       |
+| Timothy     | Gates       |
+| Randall     | Perkins     |
+| Sarah       | Bell        |
+| Britney     | Everett     |
+| Samuel      | McCain      |
+| Vance       | Jones       |
+| Alana       | Walsh       |
+| Kevin       | Feeney      |
+| Donald      | OConnell    |
+| Douglas     | Grant       |
+| Jennifer    | Whalen      |
+| Michael     | Hartstein   |
+| Susan       | Mavris      |
+| Hermann     | Baer        |
+| Shelley     | Higgins     |
+| William     | Gietz       |
++-------------+-------------+
+75 rows in set (0.12 sec)
+
+mysql> SELECT * FROM employees WHERE salary > ALL(SELECT avg(salary) FROM employees GROUP BY department_id);
++-------------+------------+-----------+-------+--------------+------------+---------+----------+----------------+------------+---------------+
+| EMPLOYEE_ID | FIRST_NAME | LAST_NAME | EMAIL | PHONE_NUMBER | HIRE_DATE  | JOB_ID  | SALARY   | COMMISSION_PCT | MANAGER_ID | DEPARTMENT_ID |
++-------------+------------+-----------+-------+--------------+------------+---------+----------+----------------+------------+---------------+
+|         100 | Steven     | King      | SKING | 515.123.4567 | 1987-06-17 | AD_PRES | 24000.00 |           0.00 |          0 |            90 |
++-------------+------------+-----------+-------+--------------+------------+---------+----------+----------------+------------+---------------+
+1 row in set (0.02 sec)
+
