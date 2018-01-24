@@ -1,0 +1,890 @@
+mysql> create or replace trigger ins_sum
+    -> before insert on number
+    -> for each row set@sum= new.n1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'trigger ins_sum
+before insert on number
+for each row set@sum= new.n1' at line 1
+mysql> create trigger ins_sum
+    -> before insert on account
+    -> for each row set @sum=@sum+new.amount;
+ERROR 1146 (42S02): Table 'csd2204w18.account' doesn't exist
+mysql> ]> CREATE PROCEDURE job_data()
+    ->     -> SELECT * FROM jobs;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ']> CREATE PROCEDURE job_data()
+    -> SELECT * FROM jobs' at line 1
+mysql> show tables;
++------------------------+
+| Tables_in_csd2204w18   |
++------------------------+
+| animals                |
+| countries              |
+| d10_v1                 |
+| d10_v8                 |
+| departments            |
+| emp_details            |
+| employees              |
+| job_history            |
+| jobs                   |
+| locations              |
+| log_emp_details        |
+| log_emp_details_update |
+| manu                   |
+| pet                    |
+| price_logs             |
+| products               |
+| regions                |
+| stud_marks             |
+| user_change_logs       |
++------------------------+
+19 rows in set (0.00 sec)
+
+mysql> CREATE PROCEDURE proc_Variables()
+    ->      BEGIN 
+    ->          DECLARE a INT DEFAULT 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql>         DECLARE b, c INT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DECLARE b, c INT' at line 1
+mysql>      SET a = a + 100; 
+ERROR 1193 (HY000): Unknown system variable 'a'
+mysql>        SET b = 2;
+ERROR 1193 (HY000): Unknown system variable 'b'
+mysql>         SET c = a + b; 
+ERROR 1193 (HY000): Unknown system variable 'c'
+mysql>            BEGIN
+    ->      DECLARE c INT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DECLARE c INT' at line 2
+mysql>                   SET c = 5;
+ERROR 1193 (HY000): Unknown system variable 'c'
+mysql>                   SELECT a, b, c; 
+ERROR 1054 (42S22): Unknown column 'a' in 'field list'
+mysql>        END; 
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql>          SELECT a, b, c;
+ERROR 1054 (42S22): Unknown column 'a' in 'field list'
+mysql>      END$$
+    -> CREATE PROCEDURE proc_User_Variables()
+    ->      BEGIN
+    ->         SET @x = 15;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END$$
+CREATE PROCEDURE proc_User_Variables()
+     BEGIN
+        SET @x = 15' at line 1
+mysql>             SET @y = 10;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>             SELECT @x, @y, @x-@y;
++------+------+-------+
+| @x   | @y   | @x-@y |
++------+------+-------+
+| NULL |   10 |  NULL |
++------+------+-------+
+1 row in set (0.00 sec)
+
+mysql>         END$$
+    ->  CREATE PROCEDURE proc_IN(IN var1 INT)
+    ->      BEGIN
+    ->      SELECT * FROM jobs LIMIT var1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END$$
+ CREATE PROCEDURE proc_IN(IN var1 INT)
+     BEGIN
+     SELECT * FROM jobs ' at line 1
+mysql>     END$$
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END$$' at line 1
+mysql> create trigger 'csd2204w18'.'emp_details_AINS'
+    -> after insert on 'csd2204w18'.'emp_details'
+    -> for each row
+    -> begin
+    -> insert into log_emp_details values(NEW,employee_id,NEW.salary.NOW());
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''csd2204w18'.'emp_details_AINS'
+after insert on 'csd2204w18'.'emp_details'
+for e' at line 1
+mysql> create trigger 'csd2204w18'.'emp_details_AINS'
+    -> after insert on 'csd2204w18'.'emp_details'
+    -> for each row
+    -> begin
+    -> insert into log_emp_details values(NEW,employee_id,NEW.salary.NOW()); END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''csd2204w18'.'emp_details_AINS'
+after insert on 'csd2204w18'.'emp_details'
+for e' at line 1
+    -> create trigger `csd2204w18`.`emp_details_AINS`
+    -> after insert on 'csd2204w18'.`emp_details`
+    -> for each row
+    -> begin
+    -> insert into log_emp_details values(NEW,employee_id,NEW.salary.NOW()); END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END$$
+create trigger `csd2204w18`.`emp_details_AINS`
+after insert on 'csd2204w18' at line 1
+    -> desc emp_details;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END$$
+desc emp_details' at line 1
+mysql> select * from emp_details$$
+    -> ;
+ERROR 1146 (42S02): Table 'csd2204w18.emp_details$$' doesn't exist
+mysql> delimiter $$
+mysql> 
+mysql> CREATE
+    -> TRIGGER`csd2204w18`.`emp_details_AINS` AFTERINSERTON`csd2204w18`.`emp_details` FOREACHROW
+    -> BEGIN
+    -> INSERTINTOlog_emp_detailsVALUES(NEW.employee_id, NEW.salary,NOW());
+    -> END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AFTERINSERTON`csd2204w18`.`emp_details` FOREACHROW
+BEGIN
+INSERTINTOlog_emp_detai' at line 2
+mysql> CREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW BEGIN SETNEW.FIRST_NAME=TRIM(NEW.FIRST_NAME); SETNEW.LAST_NAME=TRIM(NEW.LAST_NAME); SETNEW.JOB_ID=UPPER(NEW.JOB_ID); END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW B' at line 1
+mysql> CREATE TRIGGER `emp_details_BINS`
+    ->   BEFORE INSERT ON emp_details 
+    ->  FOR EACH ROW
+    ->  BEGIN 
+    -> SET NEW.FIRST_NAME = TRIM(NEW.FIRST_NAME); 
+    -> SET NEW.LAST_NAME=TRIM(NEW.LAST_NAME);
+    ->  SETNEW.JOB_ID=UPPER(NEW.JOB_ID);
+    ->  END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.JOB_ID=UPPER(NEW.JOB_ID);
+ END' at line 7
+mysql> CREATE TRIGGER `emp_details_BINS`
+    ->   BEFORE INSERT ON emp_details 
+    ->  FOR EACH ROW
+    ->  BEGIN 
+    -> SET NEW.FIRST_NAME = TRIM(NEW.FIRST_NAME); 
+    -> SET NEW.LAST_NAME=TRIM(NEW.LAST_NAME);
+    ->  SET NEW.JOB_ID=UPPER(NEW.JOB_ID);
+    ->  END$$
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> select * from emp_details$$
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+| EMPLOYEE_ID | FIRST_NAME | LAST_NAME | EMAIL                     | PHONE_NUMBER | HIRE_DATE  | JOB_ID  | SALARY   | COMMISSION_PCT |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+|         100 | STEVEN     | KING      | STEVEN.KING@GMAIL.COM     | 2345678      | 1998-01-14 | AD_PRES | 24000.00 |           0.10 |
+|         101 | NEENA      | KOCHHAR   | NEENA.KOCHHAR@GMAIL.COM   | 2345678      | 2002-10-10 | AD_VP   | 17000.00 |           0.50 |
+|         102 | LEX        | DE HANN   | LEX.HANN@GMAIL.COM        | 2345678      | 1995-10-20 | AD_VP   | 17000.00 |           0.50 |
+|         103 | ALEXANDER  | HUNOLD    | ALEXANDER.HUNOLD@GMAIL.CO | 2345678      | 2002-11-23 | IT_PROG |  9000.00 |           0.25 |
+|         104 | BRUCE      | ERNST     | BRUCE.ERNST@GMAIL.COM     | 2345678      | 2003-08-24 | IT_PROG |  6000.00 |           0.25 |
+|         105 | DAVID      | AUSTIN    | DAVID.AUSTIN@GMAIL.COM    | 2345678      | 2005-04-10 | IT_PROG |  4800.00 |           0.25 |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+6 rows in set (0.02 sec)
+
+mysql> select * from log_emp_details$$
+Empty set (0.00 sec)
+
+mysql>  INSERT INTO emp_details VALUES (334, ' Ana ', ' King', 'ANA', ?212.212.21201', '2013-02-05', 'it_prog', 17000, .50);
+    '> 
+    '> ;
+    '> $$
+    '> ;jlk
+    '> 12
+    '> ;
+    '> ;
+    '> 
+    '> ;
+    '> ;
+    '> ;
+    '> 
+    '> ;
+    '> 
+    '> ;
+    '> ;
+    '> ;$$
+    '> $$
+    '> exit;
+    '> 
+    '>  INSERT INTO emp_details VALUES (334, ' Ana ', ' King', 'ANA', ?212.212.21201', '2013-02-05', 'it_prog', 17000, .50);
+    -> $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?212.212.21201', '2013-02-05', 'it_prog', 17000, .50);
+
+;
+$$
+;jlk
+12
+;
+;
+
+;
+;
+;
+' at line 1
+mysql>  INSERT INTO emp_details VALUES (334, ' Ana ', ' King', 'ANA', ?212.212.21201', '2013-02-05', 'it_prog', 17000, .50);$$
+    '> $$
+    '> $$ 
+    '> $$
+    '> $$
+    '> ...
+    '>  INSERT INTO emp_details VALUES (334, ' Ana ', ' King', 'ANA', ?212.212.21201', '2013-02-05', 'it_prog', 17000, .50);
+    -> 
+    ->  INSERT INTO emp_details VALUES (334, ' Ana ', ' King', 'ANA', ?212.212.21201', '2013-02-05', 'it_prog', 17000, .50);
+    '> $$
+    '>  INSERT INTO emp_details VALUES (334, ' Ana ', ' King', 'ANA', ?212.212.21201', '2013-02-05', 'it_prog', 17000, .50);
+    -> $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?212.212.21201', '2013-02-05', 'it_prog', 17000, .50);$$
+$$
+$$ 
+$$
+$$
+...
+ INSER' at line 1
+mysql> show triggers from csd2204w18;
+    -> $$
++------------------+--------+-------------+-----------------------------------------------------------------------------------------------------------------------------------+--------+---------+------------------------+----------------+----------------------+----------------------+--------------------+
+| Trigger          | Event  | Table       | Statement                                                                                                                         | Timing | Created | sql_mode               | Definer        | character_set_client | collation_connection | Database Collation |
++------------------+--------+-------------+-----------------------------------------------------------------------------------------------------------------------------------+--------+---------+------------------------+----------------+----------------------+----------------------+--------------------+
+| emp_details_BINS | INSERT | emp_details | BEGIN 
+SET NEW.FIRST_NAME = TRIM(NEW.FIRST_NAME); 
+SET NEW.LAST_NAME=TRIM(NEW.LAST_NAME);
+ SET NEW.JOB_ID=UPPER(NEW.JOB_ID);
+ END | BEFORE | NULL    | NO_ENGINE_SUBSTITUTION | root@localhost | cp850                | cp850_general_ci     | latin1_swedish_ci  |
++------------------+--------+-------------+-----------------------------------------------------------------------------------------------------------------------------------+--------+---------+------------------------+----------------+----------------------+----------------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> create trigger ` emp_deails_BINS1
+    `> before insert on  emp_details
+    `> for each row
+    `> begin
+    `> set new.first_name = trim(new.first_name);
+    `> set new.last_name = trim(new.last_name);
+    `> set new.job_id = upper(new.job_id);
+    `> end$$
+    `> $$
+    `> 
+    `> ;
+    `> END$$ 
+    `> ;;sdCREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW BEGIN SETNEW.FIRST_NAME=TRIM(NEW.FIRST_NAME); SETNEW.LAST_NAME=TRIM(NEW.LAST_NAME); SETNEW.JOB_ID=UPPER(NEW.JOB_ID); END$$
+    `> $$
+    `> ;
+    `> 
+    `> CREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW BEGIN SETNEW.FIRST_NAME=TRIM(NEW.FIRST_NAME); SETNEW.LAST_NAME=TRIM(NEW.LAST_NAME); SETNEW.JOB_ID=UPPER(NEW.JOB_ID); END$$CREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW BEGIN SETNEW.FIRST_NAME=TRIM(NEW.FIRST_NAME); SETNEW.LAST_NAME=TRIM(NEW.LAST_NAME); SETNEW.JOB_ID=UPPER(NEW.JOB_ID); END$$CREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW BEGIN SETNEW.FIRST_NAME=TRIM(NEW.FIRST_NAME); SETNEW.LAST_NAME=TRIM(NEW.LAST_NAME); SETNEW.JOB_ID=UPPER(NEW.JOB_ID); END$$
+    `> CREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW BEGIN SETNEW.FIRST_NAME=TRIM(NEW.FIRST_NAME); SETNEW.LAST_NAME=TRIM(NEW.LAST_NAME); SETNEW.JOB_ID=UPPER(NEW.JOB_ID); END$$$$$$$
+    `> 
+    `> 
+    `> 
+    `> 
+    `> 
+    `> exit;
+    `> `
+    -> 
+    -> `
+    `> 
+    `> `
+    -> $$
+ERROR 1059 (42000): Identifier name ' emp_deails_BINS1
+before insert on  emp_details
+for each row
+begin
+set new.first_name = trim(new.fir' is too long
+mysql> CREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW BEGIN SETNEW.FIRST_NAME=TRIM(NEW.FIRST_NAME); SETNEW.LAST_NAME=TRIM(NEW.LAST_NAME); SETNEW.JOB_ID=UPPER(NEW.JOB_ID); END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATEorREPLACETRIGGER`emp_details_BINS` BEFOREINSERT ONemp_details FOREACHROW B' at line 1
+mysql> insert into emp_details values(334,'Ana','King','212.21.21201','2013-02-05','it_prog',17000,.50);
+    -> $$
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into emp_details values(334,'Ana','King','Ana','212.21.21201','2013-02-05','it_prog',17000,.50);
+    -> $$
+Query OK, 1 row affected (0.33 sec)
+
+mysql> select * from emp_details;
+    -> $$
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+| EMPLOYEE_ID | FIRST_NAME | LAST_NAME | EMAIL                     | PHONE_NUMBER | HIRE_DATE  | JOB_ID  | SALARY   | COMMISSION_PCT |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+|         100 | STEVEN     | KING      | STEVEN.KING@GMAIL.COM     | 2345678      | 1998-01-14 | AD_PRES | 24000.00 |           0.10 |
+|         101 | NEENA      | KOCHHAR   | NEENA.KOCHHAR@GMAIL.COM   | 2345678      | 2002-10-10 | AD_VP   | 17000.00 |           0.50 |
+|         102 | LEX        | DE HANN   | LEX.HANN@GMAIL.COM        | 2345678      | 1995-10-20 | AD_VP   | 17000.00 |           0.50 |
+|         103 | ALEXANDER  | HUNOLD    | ALEXANDER.HUNOLD@GMAIL.CO | 2345678      | 2002-11-23 | IT_PROG |  9000.00 |           0.25 |
+|         104 | BRUCE      | ERNST     | BRUCE.ERNST@GMAIL.COM     | 2345678      | 2003-08-24 | IT_PROG |  6000.00 |           0.25 |
+|         105 | DAVID      | AUSTIN    | DAVID.AUSTIN@GMAIL.COM    | 2345678      | 2005-04-10 | IT_PROG |  4800.00 |           0.25 |
+|         334 | Ana        | King      | Ana                       | 212.21.21201 | 2013-02-05 | IT_PROG | 17000.00 |           0.50 |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into emp_details values(111,'Abhi','Patel','abp@gmail.com','4375879635','2017-06-12','it_prog',10000,.70);
+    -> $$
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from emp_details;
+    -> $$
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+| EMPLOYEE_ID | FIRST_NAME | LAST_NAME | EMAIL                     | PHONE_NUMBER | HIRE_DATE  | JOB_ID  | SALARY   | COMMISSION_PCT |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+|         100 | STEVEN     | KING      | STEVEN.KING@GMAIL.COM     | 2345678      | 1998-01-14 | AD_PRES | 24000.00 |           0.10 |
+|         101 | NEENA      | KOCHHAR   | NEENA.KOCHHAR@GMAIL.COM   | 2345678      | 2002-10-10 | AD_VP   | 17000.00 |           0.50 |
+|         102 | LEX        | DE HANN   | LEX.HANN@GMAIL.COM        | 2345678      | 1995-10-20 | AD_VP   | 17000.00 |           0.50 |
+|         103 | ALEXANDER  | HUNOLD    | ALEXANDER.HUNOLD@GMAIL.CO | 2345678      | 2002-11-23 | IT_PROG |  9000.00 |           0.25 |
+|         104 | BRUCE      | ERNST     | BRUCE.ERNST@GMAIL.COM     | 2345678      | 2003-08-24 | IT_PROG |  6000.00 |           0.25 |
+|         105 | DAVID      | AUSTIN    | DAVID.AUSTIN@GMAIL.COM    | 2345678      | 2005-04-10 | IT_PROG |  4800.00 |           0.25 |
+|         111 | Abhi       | Patel     | abp@gmail.com             | 4375879635   | 2017-06-12 | IT_PROG | 10000.00 |           0.70 |
+|         334 | Ana        | King      | Ana                       | 212.21.21201 | 2013-02-05 | IT_PROG | 17000.00 |           0.50 |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE TRIGGER `emp_details_AUPD` 
+    -> AFTER UPDATE ON emp_details
+    -> FOR EACH ROW
+    ->  BEGIN INSERT INTO LOG_EMP_DETAILS_UPDATE VALUES (user(), CONCAT('Update employee Record ', OLD.FIRST_NAME,' Old Salary :',OLD.Salary,' New Salary : ', NEW.Salary),NOW());
+    ->  END$$
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> update emp_details set salary = salary+1000;
+    -> $$
+Query OK, 8 rows affected (0.28 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+mysql> select * from emp_details;
+    -> $$
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+| EMPLOYEE_ID | FIRST_NAME | LAST_NAME | EMAIL                     | PHONE_NUMBER | HIRE_DATE  | JOB_ID  | SALARY   | COMMISSION_PCT |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+|         100 | STEVEN     | KING      | STEVEN.KING@GMAIL.COM     | 2345678      | 1998-01-14 | AD_PRES | 25000.00 |           0.10 |
+|         101 | NEENA      | KOCHHAR   | NEENA.KOCHHAR@GMAIL.COM   | 2345678      | 2002-10-10 | AD_VP   | 18000.00 |           0.50 |
+|         102 | LEX        | DE HANN   | LEX.HANN@GMAIL.COM        | 2345678      | 1995-10-20 | AD_VP   | 18000.00 |           0.50 |
+|         103 | ALEXANDER  | HUNOLD    | ALEXANDER.HUNOLD@GMAIL.CO | 2345678      | 2002-11-23 | IT_PROG | 10000.00 |           0.25 |
+|         104 | BRUCE      | ERNST     | BRUCE.ERNST@GMAIL.COM     | 2345678      | 2003-08-24 | IT_PROG |  7000.00 |           0.25 |
+|         105 | DAVID      | AUSTIN    | DAVID.AUSTIN@GMAIL.COM    | 2345678      | 2005-04-10 | IT_PROG |  5800.00 |           0.25 |
+|         111 | Abhi       | Patel     | abp@gmail.com             | 4375879635   | 2017-06-12 | IT_PROG | 11000.00 |           0.70 |
+|         334 | Ana        | King      | Ana                       | 212.21.21201 | 2013-02-05 | IT_PROG | 18000.00 |           0.50 |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from log_emp_details_update;
+    -> $$
++----------------+----------------------------------------------------------------------------+---------------------+
+| USER           | DESCRIPTION                                                                | UDTTIME             |
++----------------+----------------------------------------------------------------------------+---------------------+
+| root@localhost | Update employee Record STEVEN Old Salary :24000.00 New Salary : 25000.00   | 2018-01-24 09:07:39 |
+| root@localhost | Update employee Record NEENA Old Salary :17000.00 New Salary : 18000.00    | 2018-01-24 09:07:39 |
+| root@localhost | Update employee Record LEX Old Salary :17000.00 New Salary : 18000.00      | 2018-01-24 09:07:39 |
+| root@localhost | Update employee Record ALEXANDER Old Salary :9000.00 New Salary : 10000.00 | 2018-01-24 09:07:39 |
+| root@localhost | Update employee Record BRUCE Old Salary :6000.00 New Salary : 7000.00      | 2018-01-24 09:07:39 |
+| root@localhost | Update employee Record DAVID Old Salary :4800.00 New Salary : 5800.00      | 2018-01-24 09:07:39 |
+| root@localhost | Update employee Record Abhi Old Salary :10000.00 New Salary : 11000.00     | 2018-01-24 09:07:39 |
+| root@localhost | Update employee Record Ana Old Salary :17000.00 New Salary : 18000.00      | 2018-01-24 09:07:39 |
++----------------+----------------------------------------------------------------------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE OR REPLACE TRIGGER `stud_marks_BUPD` 
+    -> BEFORE UPDATE ON stud_marks
+    -> FOR EACH ROW 
+    -> BEGIN 
+    -> SET NEW.TOTAL=NEW.SUB1+NEW.SUB2+NEW.SUB3+ NEW.SUB4+NEW.SUB5; 
+    -> SET NEW.PERCENTAGE=NEW.TOTAL/5;
+    ->  IF NEW.PERCENTAGE>=90
+    ->  THEN  SET NEW.GRADE='EXCELLENT';
+    ->  ELSEIF NEW.PERCENTAGE>=75 AND NEW.PERCENTAGE<90 
+    -> THEN SETNEW.GRADE='VERYGOOD';
+    ->  ELSEIF NEW.PERCENTAGE>=60 AND NEW.PERCENTAGE<75 
+    -> THEN SETNEW.GRADE='GOOD'; 
+    -> ELSEIF NEW.PERCENTAGE>=40 AND NEW.PERCENTAGE<60 
+    -> THEN 
+    -> SET NEW.GRADE='AVERAGE'; 
+    -> ELSE
+    ->  SET NEW.GRADE='NOTPROMOTED'; 
+    -> ENDIF;
+    ->  END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TRIGGER `stud_marks_BUPD` 
+BEFORE UPDATE ON stud_marks
+FOR EACH ROW 
+BEGIN 
+SET ' at line 1
+mysql> CREATE TRIGGER `stud_marks_BUPD` 
+    -> BEFORE UPDATE ON stud_marks
+    -> FOR EACH ROW 
+    -> BEGIN 
+    -> SET NEW.TOTAL=NEW.SUB1+NEW.SUB2+NEW.SUB3+ NEW.SUB4+NEW.SUB5; 
+    -> SET NEW.PERCENTAGE=NEW.TOTAL/5;
+    ->  IF NEW.PERCENTAGE>=90
+    ->  THEN  SET NEW.GRADE='EXCELLENT';
+    ->  ELSEIF NEW.PERCENTAGE>=75 AND NEW.PERCENTAGE<90 
+    -> THEN SETNEW.GRADE='VERYGOOD';
+    ->  ELSEIF NEW.PERCENTAGE>=60 AND NEW.PERCENTAGE<75 
+    -> THEN SETNEW.GRADE='GOOD'; 
+    -> ELSEIF NEW.PERCENTAGE>=40 AND NEW.PERCENTAGE<60 
+    -> THEN 
+    -> SET NEW.GRADE='AVERAGE'; 
+    -> ELSE
+    ->  SET NEW.GRADE='NOTPROMOTED'; 
+    -> ENDIF;
+    ->  END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.GRADE='VERYGOOD';
+ ELSEIF NEW.PERCENTAGE>=60 AND NEW.PERCENTAGE<75 
+THEN SETNEW' at line 10
+mysql> CREATE TRIGGER `stud_marks_BUPD` 
+    -> BEFORE UPDATE ON stud_marks
+    -> FOR EACH ROW 
+    -> BEGIN 
+    -> SET NEW.TOTAL=NEW.SUB1+NEW.SUB2+NEW.SUB3+ NEW.SUB4+NEW.SUB5; 
+    -> SET NEW.PERCENTAGE=NEW.TOTAL/5;
+    ->  IF NEW.PERCENTAGE>=90
+    ->  THEN  SET NEW.GRADE='EXCELLENT';
+    ->  ELSEIF NEW.PERCENTAGE>=75 AND NEW.PERCENTAGE<90 
+    -> THEN SET NEW.GRADE='VERYGOOD';
+    ->  ELSEIF NEW.PERCENTAGE>=60 AND NEW.PERCENTAGE<75 
+    -> THEN SET NEW.GRADE='GOOD'; 
+    -> ELSEIF NEW.PERCENTAGE>=40 AND NEW.PERCENTAGE<60 
+    -> THEN 
+    -> SET NEW.GRADE='AVERAGE'; 
+    -> ELSE
+    ->  SET NEW.GRADE='NOTPROMOTED'; 
+    -> ENDIF;
+    ->  END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ';
+ END' at line 18
+mysql> CREATE TRIGGER `stud_marks_BUPD` 
+    -> BEFORE UPDATE ON stud_marks
+    -> FOR EACH ROW 
+    -> BEGIN 
+    -> SET NEW.TOTAL=NEW.SUB1+NEW.SUB2+NEW.SUB3+ NEW.SUB4+NEW.SUB5; 
+    -> SET NEW.PERCENTAGE=NEW.TOTAL/5;
+    ->  IF NEW.PERCENTAGE>=90
+    ->  THEN  SET NEW.GRADE='EXCELLENT';
+    ->  ELSEIF NEW.PERCENTAGE>=75 AND NEW.PERCENTAGE<90 
+    -> THEN SET NEW.GRADE='VERYGOOD';
+    ->  ELSEIF NEW.PERCENTAGE>=60 AND NEW.PERCENTAGE<75 
+    -> THEN SET NEW.GRADE='GOOD'; 
+    -> ELSEIF NEW.PERCENTAGE>=40 AND NEW.PERCENTAGE<60 
+    -> THEN 
+    -> SET NEW.GRADE='AVERAGE'; 
+    -> ELSE
+    ->  SET NEW.GRADE='NOTPROMOTED'; 
+    -> END IF;
+    ->  END$$
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> select * from stud_marks;
+    -> $$
++------------+---------+------+------+------+------+------+-------+------------+-------+
+| STUDENT_ID | NAME    | SUB1 | SUB2 | SUB3 | SUB4 | SUB5 | TOTAL | PERCENTAGE | GRADE |
++------------+---------+------+------+------+------+------+-------+------------+-------+
+|          1 | ALEX    | NULL | NULL | NULL | NULL | NULL |  NULL |       NULL | NULL  |
+|          2 | BOB     | NULL | NULL | NULL | NULL | NULL |  NULL |       NULL | NULL  |
+|          3 | CHARLEY | NULL | NULL | NULL | NULL | NULL |  NULL |       NULL | NULL  |
+|          4 | DONNA   | NULL | NULL | NULL | NULL | NULL |  NULL |       NULL | NULL  |
++------------+---------+------+------+------+------+------+-------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TRIGGER `emp_details_ADEL` 
+    -> AFTER DELETE ON emp_details
+    -> FOR EACH ROW 
+    -> BEGIN INSERT INTO LOG_EMP_DETAILS_UPDATE VALUES (user(), CONCAT('Delete Employee Record', OLD.FIRST_NAME, '-> Deletedon'),NOW());
+    ->  END$$
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> select * from emp_details ;
+    -> $$
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+| EMPLOYEE_ID | FIRST_NAME | LAST_NAME | EMAIL                     | PHONE_NUMBER | HIRE_DATE  | JOB_ID  | SALARY   | COMMISSION_PCT |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+|         100 | STEVEN     | KING      | STEVEN.KING@GMAIL.COM     | 2345678      | 1998-01-14 | AD_PRES | 25000.00 |           0.10 |
+|         101 | NEENA      | KOCHHAR   | NEENA.KOCHHAR@GMAIL.COM   | 2345678      | 2002-10-10 | AD_VP   | 18000.00 |           0.50 |
+|         102 | LEX        | DE HANN   | LEX.HANN@GMAIL.COM        | 2345678      | 1995-10-20 | AD_VP   | 18000.00 |           0.50 |
+|         103 | ALEXANDER  | HUNOLD    | ALEXANDER.HUNOLD@GMAIL.CO | 2345678      | 2002-11-23 | IT_PROG | 10000.00 |           0.25 |
+|         104 | BRUCE      | ERNST     | BRUCE.ERNST@GMAIL.COM     | 2345678      | 2003-08-24 | IT_PROG |  7000.00 |           0.25 |
+|         105 | DAVID      | AUSTIN    | DAVID.AUSTIN@GMAIL.COM    | 2345678      | 2005-04-10 | IT_PROG |  5800.00 |           0.25 |
+|         111 | Abhi       | Patel     | abp@gmail.com             | 4375879635   | 2017-06-12 | IT_PROG | 11000.00 |           0.70 |
+|         334 | Ana        | King      | Ana                       | 212.21.21201 | 2013-02-05 | IT_PROG | 18000.00 |           0.50 |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> delete from emp_details where employee_id = 100;
+    -> $$
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from emp_details;
+    -> $$
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+| EMPLOYEE_ID | FIRST_NAME | LAST_NAME | EMAIL                     | PHONE_NUMBER | HIRE_DATE  | JOB_ID  | SALARY   | COMMISSION_PCT |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+|         101 | NEENA      | KOCHHAR   | NEENA.KOCHHAR@GMAIL.COM   | 2345678      | 2002-10-10 | AD_VP   | 18000.00 |           0.50 |
+|         102 | LEX        | DE HANN   | LEX.HANN@GMAIL.COM        | 2345678      | 1995-10-20 | AD_VP   | 18000.00 |           0.50 |
+|         103 | ALEXANDER  | HUNOLD    | ALEXANDER.HUNOLD@GMAIL.CO | 2345678      | 2002-11-23 | IT_PROG | 10000.00 |           0.25 |
+|         104 | BRUCE      | ERNST     | BRUCE.ERNST@GMAIL.COM     | 2345678      | 2003-08-24 | IT_PROG |  7000.00 |           0.25 |
+|         105 | DAVID      | AUSTIN    | DAVID.AUSTIN@GMAIL.COM    | 2345678      | 2005-04-10 | IT_PROG |  5800.00 |           0.25 |
+|         111 | Abhi       | Patel     | abp@gmail.com             | 4375879635   | 2017-06-12 | IT_PROG | 11000.00 |           0.70 |
+|         334 | Ana        | King      | Ana                       | 212.21.21201 | 2013-02-05 | IT_PROG | 18000.00 |           0.50 |
++-------------+------------+-----------+---------------------------+--------------+------------+---------+----------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TRIGGER before_products_update 
+    -> BEFORE UPDATE on Products FOR EACH ROW 
+    -> BEGIN 
+    -> INSERT INTO price_logs (product_code,price) VALUES(old.c ode,old.price);
+    ->  END$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ode,old.price);
+ END' at line 4
+mysql> create trigger before_products_update_2
+    -> before update on products
+    -> for each row follows before_products_update
+    -> begin
+    -> insert into user_change_logs(product_code,updated_by)
+    -> end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'before_products_update
+begin
+insert into user_change_logs(product_code,updated_b' at line 3
+mysql> show tables;
+    -> $$
++------------------------+
+| Tables_in_csd2204w18   |
++------------------------+
+| animals                |
+| countries              |
+| d10_v1                 |
+| d10_v8                 |
+| departments            |
+| emp_details            |
+| employees              |
+| job_history            |
+| jobs                   |
+| locations              |
+| log_emp_details        |
+| log_emp_details_update |
+| manu                   |
+| pet                    |
+| price_logs             |
+| products               |
+| regions                |
+| stud_marks             |
+| user_change_logs       |
++------------------------+
+19 rows in set (0.00 sec)
+
+mysql> create table custom(
+    -> id int(10),
+    -> name varchar(20),
+    -> email varchar(50),
+    -> purchaseamount int(10),
+    -> membershiptype varchar(5)
+    -> );
+    -> $$
+Query OK, 0 rows affected (0.42 sec)
+
+mysql> insert into custom values(1,'abc',abc@abc.com',1000,'temp');
+    '> $$
+    '> $$
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> .
+    '> .
+    '> .
+    '> 
+    '> exit;
+    '> 
+    '> 
+    '> 
+    '> `
+    '> $$
+    '> 
+    '> '';
+    '> 
+    '> $$
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> 
+    '> '
+    -> $$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@abc.com',1000,'temp');
+$$
+$$
+
+
+
+
+
+
+.
+.
+.
+
+exit;
+
+
+
+`
+$$
+
+'';
+
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+' at line 1
+mysql> insert into custom values(1,'abc',abc@abc.com',1000,'temp');$$
+    '>  
+    '> `
+    '> $$
+    '> $$
+    '> ``
+    '> `
+    '> `
+    '> $$
+    '> ;
+    '> $$
+    '> $;$
+    '> ; 
+    '> $$
+    '> ; $$
+    '> 
+    '> \
+    '> ````
+    '> exit;
+    '> 
+    '> 11
+    '> ``;
+    '> $$
+    '> `
+    '> ;
+    '> $$
+    '> exit;
+    '> insert into custom values(1,'abc',abc@abc.com',1000,'temp');$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@abc.com',1000,'temp');$$
+ 
+`
+$$
+$$
+``
+`
+`
+$$
+;
+$$
+$;$
+; 
+$$
+; $$
+
+
+````
+exit;
+
+' at line 1
+mysql> insert into custom values(1,'abc','abc@abc.com','10000','silver');$$
+Query OK, 1 row affected, 1 warning (0.06 sec)
+
+mysql> insert into custom values(2,'xyz','xyz@abc.com','120000','gold');$$
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into custom values(3,'Jaydeep','jd@abc.com','1000000','gold');$$
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into custom values(4,'rohan','rh@abc.com','10000','bronze');$$
+Query OK, 1 row affected, 1 warning (0.15 sec)
+
+mysql> insert into custom values(5,'abhi','ab@abc.com','600000','silver');$$
+Query OK, 1 row affected, 1 warning (0.07 sec)
+
+mysql> select * from custom;
+    -> $$
++------+---------+-------------+----------------+----------------+
+| id   | name    | email       | purchaseamount | membershiptype |
++------+---------+-------------+----------------+----------------+
+|    1 | abc     | abc@abc.com |          10000 | silve          |
+|    2 | xyz     | xyz@abc.com |         120000 | gold           |
+|    3 | Jaydeep | jd@abc.com  |        1000000 | gold           |
+|    4 | rohan   | rh@abc.com  |          10000 | bronz          |
+|    5 | abhi    | ab@abc.com  |         600000 | silve          |
++------+---------+-------------+----------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> update custom set membershiptype='bronze' where id = 4;$$
+Query OK, 0 rows affected, 1 warning (0.09 sec)
+Rows matched: 1  Changed: 0  Warnings: 1
+
+mysql> select * from custom;
+    -> $$
++------+---------+-------------+----------------+----------------+
+| id   | name    | email       | purchaseamount | membershiptype |
++------+---------+-------------+----------------+----------------+
+|    1 | abc     | abc@abc.com |          10000 | silve          |
+|    2 | xyz     | xyz@abc.com |         120000 | gold           |
+|    3 | Jaydeep | jd@abc.com  |        1000000 | gold           |
+|    4 | rohan   | rh@abc.com  |          10000 | bronz          |
+|    5 | abhi    | ab@abc.com  |         600000 | silve          |
++------+---------+-------------+----------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> create trigger 'cust'
+    -> before update on custom for each row
+    -> begin
+    -> if new.puchaseamount > 100000 
+    -> then set ;$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''cust'
+before update on custom for each row
+begin
+if new.puchaseamount > 100000 ' at line 1
+mysql> create trigger 'cust'
+    -> before update on custom for each row
+    -> begin
+    -> if new.puchaseamount > 99999
+    -> then set new.membershiptype = 'gold';
+    -> elseif new.purchaseamount > 110000 and new.purchaseamount < 100000
+    -> then set new.membershiptype='silver';
+    -> else set new.membershiptype='bronze';
+    -> end if;
+    -> end$$ 
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''cust'
+before update on custom for each row
+begin
+if new.puchaseamount > 99999
+t' at line 1
+mysql> create trigger 'trg_cust'
+    -> before update on custom for each row
+    -> begin
+    -> if new.puchaseamount > 99999
+    -> then set new.membershiptype = 'gold';
+    -> elseif new.purchaseamount > 110000 and new.purchaseamount < 100000
+    -> then set new.membershiptype='silver';
+    -> else set new.membershiptype='bronze';
+    -> end if;
+    -> end$$ 
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''trg_cust'
+before update on custom for each row
+begin
+if new.puchaseamount > 999' at line 1
+mysql> create trigger 'activ'
+    ->      before update on custom for each row
+    ->      begin
+    ->      if new.puchaseamount > 99999
+    ->      then set new.membershiptype = 'gold';
+    ->      elseif new.purchaseamount > 110000 and new.purchaseamount < 100000
+    ->      then set new.membershiptype='silver';
+    ->      else set new.membershiptype='bronze';
+    ->      end if;
+    ->      end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''activ'
+     before update on custom for each row
+     begin
+     if new.puchase' at line 1
+mysql> create or replace trigger 'activ'
+    ->      before update on custom for each row
+    ->      begin
+    ->      if new.puchaseamount > 99999
+    ->      then set new.membershiptype = 'gold';
+    ->      elseif new.purchaseamount > 110000 and new.purchaseamount < 100000
+    ->      then set new.membershiptype='silver';
+    ->      else set new.membershiptype='bronze';
+    ->      end if;
+    ->      end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'trigger 'activ'
+     before update on custom for each row
+     begin
+     if new' at line 1
+mysql> create trigger 'activ'
+    ->      before update on custom for each row
+    ->      begin
+    ->      if new.puchaseamount > 99999
+    ->      then set new.membershiptype = 'gold';
+    ->      elseif new.purchaseamount > 110000 and new.purchaseamount < 100000
+    ->      then set new.membershiptype='silver';
+    ->      else set new.membershiptype='bronze';
+    ->      end if;
+    ->      end$$
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''activ'
+     before update on custom for each row
+     begin
+     if new.puchase' at line 1
+mysql> create trigger `cust`
+    ->      before update on custom for each row
+    ->      begin
+    ->      if new.puchaseamount > 99999
+    ->      then set new.membershiptype = 'gold';
+    ->      elseif new.purchaseamount > 110000 and new.purchaseamount < 100000
+    ->      then set new.membershiptype='silver';
+    ->      else set new.membershiptype='bronze';
+    ->      end if;
+    ->      end$$
+ERROR 1054 (42S22): Unknown column 'puchaseamount' in 'NEW'
+mysql> create trigger `cust`
+    ->      before update on custom for each row
+    ->      begin
+    ->      if new.purchaseamount > 99999
+    ->      then set new.membershiptype = 'gold';
+    ->      elseif new.purchaseamount > 110000 and new.purchaseamount < 100000
+    ->      then set new.membershiptype='silver';
+    ->      else set new.membershiptype='bronze';
+    ->      end if;
+    ->      end$$
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> select * from cust;
+    -> $$
+ERROR 1146 (42S02): Table 'csd2204w18.cust' doesn't exist
+mysql> select * from custom;
+    -> $$
++------+---------+-------------+----------------+----------------+
+| id   | name    | email       | purchaseamount | membershiptype |
++------+---------+-------------+----------------+----------------+
+|    1 | abc     | abc@abc.com |          10000 | silve          |
+|    2 | xyz     | xyz@abc.com |         120000 | gold           |
+|    3 | Jaydeep | jd@abc.com  |        1000000 | gold           |
+|    4 | rohan   | rh@abc.com  |          10000 | bronz          |
+|    5 | abhi    | ab@abc.com  |         600000 | silve          |
++------+---------+-------------+----------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> update custom set purchaseamount='1000000' where id =5;
+    -> $$
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from custom;
+    -> $$
++------+---------+-------------+----------------+----------------+
+| id   | name    | email       | purchaseamount | membershiptype |
++------+---------+-------------+----------------+----------------+
+|    1 | abc     | abc@abc.com |          10000 | silve          |
+|    2 | xyz     | xyz@abc.com |         120000 | gold           |
+|    3 | Jaydeep | jd@abc.com  |        1000000 | gold           |
+|    4 | rohan   | rh@abc.com  |          10000 | bronz          |
+|    5 | abhi    | ab@abc.com  |        1000000 | gold           |
++------+---------+-------------+----------------+----------------+
+5 rows in set (0.00 sec)
+
